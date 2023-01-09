@@ -1,4 +1,4 @@
-package edu.henriqueborba.fwcalbumapp.services;
+package edu.henriqueborba.fwcalbumapp.services.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -69,5 +69,9 @@ public class JwtService {
     private Key getSigningKey() {
         final byte[] keybytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keybytes);
+    }
+
+    public void getCurrentToken() {
+
     }
 }

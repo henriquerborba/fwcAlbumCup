@@ -19,11 +19,14 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
 
     private static final String[] PUBLIC_URLS = {
+            "/h2-console/**",
+            "/h2-console",
             "/swagger-ui.html",
             "/swagger-ui/**",
             "/v3/api-docs/**",
             "/api/auth",
             "/api/register",
+            "/console/**"
     };
 
     @Bean
@@ -32,7 +35,8 @@ public class SecurityConfig {
         http.headers().frameOptions().disable();
         http.cors().and().csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authenticationProvider(authenticationProvider).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        http.authenticationProvider(authenticationProvider).addFilterBefore(jwtAuthFilter,
+                UsernamePasswordAuthenticationFilter.class);
         http.authorizeHttpRequests().requestMatchers(PUBLIC_URLS).permitAll().anyRequest().authenticated();
         return http.build();
     }
