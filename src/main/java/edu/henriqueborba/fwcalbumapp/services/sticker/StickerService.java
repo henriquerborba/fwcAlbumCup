@@ -27,4 +27,22 @@ public class StickerService {
 
         return repository.save(newSticker);
     }
+
+    public Sticker getStickerById(Integer id) {
+        return repository.findById(id).orElseThrow();
+    }
+
+    public Sticker updateSticker(Integer id, StickerRequest sticker) {
+        final Sticker stickerToUpdate = repository.findById(id).orElseThrow();
+
+        stickerToUpdate.setName(sticker.getName());
+        stickerToUpdate.setNumber(sticker.getNumber());
+        stickerToUpdate.setCode(sticker.getCode());
+
+        return repository.save(stickerToUpdate);
+    }
+
+    public List<Sticker> searchStickerByCodeAndNumber(String stickerCode, Integer stickerNumber) {
+        return repository.findByCodeAndNumber(stickerCode, stickerNumber);
+    }
 }

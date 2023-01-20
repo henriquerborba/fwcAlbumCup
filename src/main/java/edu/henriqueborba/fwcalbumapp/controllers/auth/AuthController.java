@@ -12,11 +12,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("api/")
 @RequiredArgsConstructor
-@Tag(name = "Auth")
+@Tag(name = "Auth", description = "Autenticação do usuário")
 public class AuthController {
 
     private final AuthenticationService service;
@@ -38,6 +40,20 @@ public class AuthController {
     @GetMapping("/me")
     public ResponseEntity<User> me() {
         return ResponseEntity.ok(service.me());
+    }
+
+    @Operation(summary = "Refresh token")
+    @SecurityRequirement(name = "bearerAuth")
+    @PostMapping("/auth/refresh")
+    public ResponseEntity<AuthenticationResponse> refreshToken() {
+        return ResponseEntity.ok(service.refreshToken());
+    }
+    
+    @Operation(summary = "Deslogar usuário e invalidar o token")
+    @SecurityRequirement(name = "bearerAuth")
+    @PostMapping("/auth/logout")
+    public void logout() {
+        service.logout();
     }
 
 }
