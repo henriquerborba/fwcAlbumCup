@@ -3,6 +3,8 @@ package edu.henriqueborba.fwcalbumapp.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -14,7 +16,7 @@ public class Sticker {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     private String name;
     private Integer number;
     private String code;

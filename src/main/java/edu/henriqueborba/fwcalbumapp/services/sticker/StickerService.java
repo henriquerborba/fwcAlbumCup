@@ -1,9 +1,11 @@
 package edu.henriqueborba.fwcalbumapp.services.sticker;
 
+import edu.henriqueborba.fwcalbumapp.advice.BusinessException;
 import edu.henriqueborba.fwcalbumapp.dtos.sticker.StickerRequest;
 import edu.henriqueborba.fwcalbumapp.models.Sticker;
 import edu.henriqueborba.fwcalbumapp.repository.StickerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,11 +30,13 @@ public class StickerService {
         return repository.save(newSticker);
     }
 
-    public Sticker getStickerById(Integer id) {
-        return repository.findById(id).orElseThrow();
+    public Sticker getStickerById(Long id) {
+        return repository.findById(id).orElseThrow(
+                () -> new BusinessException("Figurinha não encontrada", HttpStatus.NOT_FOUND)
+        );
     }
 
-    public Sticker updateSticker(Integer id, StickerRequest sticker) {
+    public Sticker updateSticker(Long id, StickerRequest sticker) {
         final Sticker stickerToUpdate = repository.findById(id).orElseThrow();
 
         stickerToUpdate.setName(sticker.getName());
@@ -42,7 +46,7 @@ public class StickerService {
         return repository.save(stickerToUpdate);
     }
 
-    public List<Sticker> searchStickerByCodeAndNumber(String stickerCode, Integer stickerNumber) {
-        return repository.findByCodeAndNumber(stickerCode, stickerNumber);
+    public List<Sticker> searchStickerByCodeAndNumber(String stickerCode, Long stickerNumber) {
+        return repository.findAllByCodeAndNumber(stickerCode, stickerNumber);
     }
 }

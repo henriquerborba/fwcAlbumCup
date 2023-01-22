@@ -18,6 +18,8 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
     private static final String[] PUBLIC_URLS = {
             "/h2-console/**",
             "/h2-console",
@@ -38,6 +40,8 @@ public class SecurityConfig {
         http.authenticationProvider(authenticationProvider).addFilterBefore(jwtAuthFilter,
                 UsernamePasswordAuthenticationFilter.class);
         http.authorizeHttpRequests().requestMatchers(PUBLIC_URLS).permitAll().anyRequest().authenticated();
+        http.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
+
         return http.build();
     }
 

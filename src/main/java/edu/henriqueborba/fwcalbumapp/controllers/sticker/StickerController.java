@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,27 +37,27 @@ public class StickerController {
 
     @Operation(summary = "Adicionar figurinhas ao sistema")
     @PostMapping
-    public ResponseEntity<Sticker> createSticker(@RequestBody StickerRequest sticker) {
+    public ResponseEntity<Sticker> createSticker(@Valid @RequestBody StickerRequest sticker) {
         return ResponseEntity.ok(service.createSticker(sticker));
     }
 
     @Operation(summary = "detalhe de uma figurinha especifica")
     @GetMapping("/{id}")
-    public ResponseEntity<Sticker> getStickerById(@PathVariable Integer id) {
+    public ResponseEntity<Sticker> getStickerById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getStickerById(id));
     }
 
     @Operation(summary = "Atualizar uma figurinha especifica")
     @PostMapping("/{id}")
-    public ResponseEntity<Sticker> updateSticker(@PathVariable Integer id, @RequestBody StickerRequest sticker) {
+    public ResponseEntity<Sticker> updateSticker(@PathVariable Long id,@Valid @RequestBody StickerRequest sticker) {
         return ResponseEntity.ok(service.updateSticker(id, sticker));
     }
 
     @Operation(summary = "Pesquisa figurinha por Codigo + número")
     @GetMapping("/search")
     public ResponseEntity<List<Sticker>> searchStickerByCodeAndNumber(
-            @Parameter(description = "Código do país") @RequestParam("sticker_code") String stickerCode,
-            @Parameter(description = "Número da figurinha") @RequestParam("sticker_number") Integer stickerNumber) {
+            @Parameter(description = "Código do país", required = false) @RequestParam(value = "sticker_code", required = false) String stickerCode,
+            @Parameter(description = "Número da figurinha", required = false) @RequestParam(value = "sticker_number", required = false) Long stickerNumber) {
         return ResponseEntity.ok(service.searchStickerByCodeAndNumber(stickerCode, stickerNumber));
     }
 
