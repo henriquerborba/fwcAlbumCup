@@ -2,8 +2,10 @@ package edu.henriqueborba.fwcalbumapp.core.advice;
 
 import java.time.ZonedDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
@@ -17,7 +19,7 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(value = {ApiRequestException.class})
     public ResponseEntity<Object> handleApiRequestException(ApiRequestException e) {
-        final HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        final HttpStatus badRequest = HttpStatus.CONFLICT;
 
         final ApiException apiException = ApiException.builder()
                 .message(e.getMessage())
@@ -43,14 +45,16 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(apiException, unauthorized);
     }
 
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
-    public Map<String, String> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        Map<String, String> errorMap = new HashMap<>();
-        e.getBindingResult().getFieldErrors().forEach(fieldError -> {
-            errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
-        });
-        return errorMap;
+    public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        List<String> errors = e.getBindingResult().getFieldErrors().stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .toList();
+
+        Map<String, List<String>> errorMap = new HashMap<>();
+        errorMap.put("errors", errors);
+
+        return new ResponseEntity<>(errorMap, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @ExceptionHandler(value = {Exception.class})

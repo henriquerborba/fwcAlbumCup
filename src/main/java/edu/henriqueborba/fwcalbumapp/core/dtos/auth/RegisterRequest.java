@@ -14,11 +14,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegisterRequest {
 
-    @NotBlank(message = "Preencha o campo corretamente")
-    @Size(min = 3, max = 50, message = "'${validatedValue}' precisa estar entre {min} e {max} caracteres.")
+    @NotBlank(message = "Nome é obrigatório")
+    @Size(min = 3, max = 50, message = "Nome precisa ter entre {min} e {max} caracteres.")
     private String name;
-    @NotBlank(message = "Preencha o campo corretamente")
-    @Email
+    @NotBlank(message = "Email deve é obraatório")
+    @Email(message = "Email inválido")
     private String email;
     private String password;
     private String passwordConfirmation;

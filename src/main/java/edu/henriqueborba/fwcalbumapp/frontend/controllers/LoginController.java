@@ -1,6 +1,7 @@
 package edu.henriqueborba.fwcalbumapp.frontend.controllers;
 
 import edu.henriqueborba.fwcalbumapp.core.advice.BusinessException;
+import edu.henriqueborba.fwcalbumapp.core.advice.Failure;
 import edu.henriqueborba.fwcalbumapp.frontend.pages.home.HomeView;
 
 import edu.henriqueborba.fwcalbumapp.frontend.pages.login.LoginView;
@@ -26,7 +27,7 @@ public class LoginController {
             homeView.setVisible(true);
             view.dispose();
 
-        } catch (BusinessException e) {
+        } catch (Failure e) {
             view.showMessage(e.getMessage());
         } catch (Exception e) {
             view.showMessage("Erro inesperado");
