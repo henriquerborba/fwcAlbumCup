@@ -1,5 +1,6 @@
 package edu.henriqueborba.fwcalbumapp.backend.services.auth;
 
+import edu.henriqueborba.fwcalbumapp.core.advice.BusinessException;
 import edu.henriqueborba.fwcalbumapp.core.dtos.auth.AuthenticationRequest;
 import edu.henriqueborba.fwcalbumapp.core.dtos.auth.AuthenticationResponse;
 import edu.henriqueborba.fwcalbumapp.core.dtos.auth.RegisterRequest;
@@ -22,6 +23,10 @@ public class AuthenticationService {
         private final AuthenticationManager authenticationManager;
 
         public AuthenticationResponse register(RegisterRequest request) {
+                if(repository.existsByEmail(request.getEmail())) {
+                        throw new BusinessException("Email já cadastrado");
+                }
+
                 var user = User.builder()
                                 .email(request.getEmail())
                                 .name(request.getName())
