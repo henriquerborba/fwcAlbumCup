@@ -2,9 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package edu.henriqueborba.fwcalbumapp.frontend.pages.register;
+package edu.henriqueborba.fwcalbumapp.frontend.views.register;
 
+import edu.henriqueborba.fwcalbumapp.frontend.controllers.RegisterController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+
+import javax.swing.*;
 
 /**
  *
@@ -13,10 +18,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class RegisterView extends javax.swing.JFrame {
 
+    private final RegisterController controller;
+
+    public void showMessage(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
+
+
     /**
      * Creates new form RegsterView
      */
-    public RegisterView() {
+
+    @Autowired
+    public RegisterView(@Lazy RegisterController controller) {
+        this.controller = controller;
         initComponents();
     }
 
@@ -33,14 +48,14 @@ public class RegisterView extends javax.swing.JFrame {
         arrowBack = new javax.swing.JLabel();
         nameTF = new javax.swing.JTextField();
         emailTF = new javax.swing.JTextField();
-        passwordTF = new javax.swing.JTextField();
-        passwordConfirmationTf = new javax.swing.JTextField();
         registerUser = new javax.swing.JLabel();
         nameLabel = new javax.swing.JLabel();
         emailLabel = new javax.swing.JLabel();
         passwordLabel = new javax.swing.JLabel();
         passwordConfirmationLabel = new javax.swing.JLabel();
         entryButton = new javax.swing.JButton();
+        passwordConfiramtionTF = new javax.swing.JPasswordField();
+        passwordTF = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(375, 812));
@@ -67,20 +82,6 @@ public class RegisterView extends javax.swing.JFrame {
             }
         });
         getContentPane().add(emailTF, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, 300, 40));
-
-        passwordTF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordTFActionPerformed(evt);
-            }
-        });
-        getContentPane().add(passwordTF, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 490, 300, 40));
-
-        passwordConfirmationTf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordConfirmationTfActionPerformed(evt);
-            }
-        });
-        getContentPane().add(passwordConfirmationTf, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 570, 300, 40));
 
         registerUser.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         registerUser.setText("Cadastrar Usuário");
@@ -116,6 +117,8 @@ public class RegisterView extends javax.swing.JFrame {
             }
         });
         getContentPane().add(entryButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 640, 300, 30));
+        getContentPane().add(passwordConfiramtionTF, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 570, 300, 40));
+        getContentPane().add(passwordTF, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 490, 300, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -124,57 +127,18 @@ public class RegisterView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_nameTFActionPerformed
 
-    private void passwordTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordTFActionPerformed
-
     private void emailTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_emailTFActionPerformed
 
-    private void passwordConfirmationTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordConfirmationTfActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordConfirmationTfActionPerformed
-
     private void entryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entryButtonActionPerformed
-        
+        controller.register(
+                nameTF.getText(),
+                emailTF.getText(),
+                String.valueOf(passwordTF.getPassword()),
+                String.valueOf(passwordConfiramtionTF.getPassword())
+        );
     }//GEN-LAST:event_entryButtonActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RegisterView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RegisterView().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel arrowBack;
@@ -184,10 +148,11 @@ public class RegisterView extends javax.swing.JFrame {
     private javax.swing.JButton entryButton;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField nameTF;
+    private javax.swing.JPasswordField passwordConfiramtionTF;
     private javax.swing.JLabel passwordConfirmationLabel;
-    private javax.swing.JTextField passwordConfirmationTf;
     private javax.swing.JLabel passwordLabel;
-    private javax.swing.JTextField passwordTF;
+    private javax.swing.JPasswordField passwordTF;
     private javax.swing.JLabel registerUser;
+
     // End of variables declaration//GEN-END:variables
 }

@@ -1,6 +1,6 @@
 package edu.henriqueborba.fwcalbumapp.frontend;
 
-import edu.henriqueborba.fwcalbumapp.frontend.pages.login.LoginView;
+import edu.henriqueborba.fwcalbumapp.frontend.views.login.LoginView;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

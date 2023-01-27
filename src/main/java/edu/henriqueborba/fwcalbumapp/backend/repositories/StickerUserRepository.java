@@ -15,3 +15,4 @@ public interface StickerUserRepository extends JpaRepository<StickerUser, Long> 
     @Query(value = "SELECT su FROM StickerUser su WHERE su.id.user.id = :userId AND su.amount > 1")
     List<StickerUser> findAllDuplicateByUserId(Long userId);
 }
+

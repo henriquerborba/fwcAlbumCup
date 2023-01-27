@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package edu.henriqueborba.fwcalbumapp.frontend.pages.login;
+package edu.henriqueborba.fwcalbumapp.frontend.views.login;
 
 import edu.henriqueborba.fwcalbumapp.frontend.controllers.LoginController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,7 +111,7 @@ public class LoginView extends javax.swing.JFrame {
     }//GEN-LAST:event_loginTFActionPerformed
 
     private void entryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entryButtonActionPerformed
-      controller.login(loginTF.getText(), passwordTF.getText());
+      controller.login(loginTF.getText(), String.valueOf(passwordTF.getPassword()));
     }//GEN-LAST:event_entryButtonActionPerformed
 
     private void CadLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CadLabel1MouseClicked
